@@ -1,0 +1,10 @@
+import mongoose from "mongoose";
+
+export const isValidObjectId = (id) => {
+  return mongoose.Types.ObjectId.isValid(id);
+};
+
+export const mongoId = (id) => {
+  if (!isValidObjectId(id)) return null;
+  return new mongoose.Types.ObjectId(id);
+};

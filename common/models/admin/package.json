@@ -1,0 +1,29 @@
+{
+  "name": "@sakura-soft/common-admin-model",
+  "version": "1.0.2",
+  "main": "index.js",
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "echo 'No build needed for JS'",
+    "prepare": "echo 'Ready to publish'"
+  },
+  "keywords": [
+    "mongoose",
+    "models",
+    "schemas",
+    "common"
+  ],
+  "author": "AJ",
+  "license": "ISC",
+  "description": "Shared Mongoose schemas for multiple microservices",
+  "files": [
+    "*.js"
+  ],
+  "peerDependencies": {
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.19.0"
+  }
+}

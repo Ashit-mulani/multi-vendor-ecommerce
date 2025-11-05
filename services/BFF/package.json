@@ -1,0 +1,16 @@
+{
+  "name": "BFF",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "",
+    "dev": "concurrently \"npm run dev --prefix user\" \"npm run dev --prefix vendor\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

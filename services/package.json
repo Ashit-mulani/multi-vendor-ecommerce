@@ -1,0 +1,17 @@
+{
+  "name": "services",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "",
+    "dev": "concurrently \"npm run dev --prefix auth\" \"npm run dev --prefix microservices\" \"npm run dev --prefix admin\" \"npm run dev --prefix BFF\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "nodemon": "^3.1.10"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "catalogue",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix write\" \"npm run dev --prefix read\" \"npm run dev --prefix consumer\" \"npm run dev --prefix backup\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "nodemon": "^3.1.10"
+  }
+}

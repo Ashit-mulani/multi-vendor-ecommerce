@@ -1,0 +1,27 @@
+{
+  "name": "@sakura-soft/common-category-model",
+  "version": "1.0.1",
+  "main": "index.js",
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mongoose",
+    "models",
+    "schemas",
+    "common"
+  ],
+  "author": "AJ",
+  "license": "ISC",
+  "description": "Shared Mongoose schemas for multiple microservices",
+  "files": [
+    "*.js"
+  ],
+  "peerDependencies": {
+    "mongoose": "^8.19.0"
+  }
+}

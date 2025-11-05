@@ -1,0 +1,145 @@
+services:
+  mongo:
+    image: mongo
+    container_name: main-db
+    ports:
+      - "27017:27017"
+    volumes:
+      - /C/Users/ashit/OneDrive/temp/docker-volumes/DB/main-db:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: main-db
+      MONGO_INITDB_ROOT_PASSWORD: MAJTHEMd04
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  backup-mongo:
+    image: mongo
+    container_name: backup-db
+    ports:
+      - "27018:27017"
+    volumes:
+      - /C/Users/ashit/OneDrive/temp/docker-volumes/DB/backup-db:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: backup-db
+      MONGO_INITDB_ROOT_PASSWORD: MAJTHEMd04
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  api-gateway:
+    build: ./services/api-gateways/main
+    container_name: api-gateway
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    networks:
+      - app-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  catalogue-gateway:
+    build: ./services/api-gateways/catalogue
+    container_name: catalogue-gateway
+    ports:
+      - "81:80"
+    restart: unless-stopped
+    networks:
+      - app-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  main-redis:
+    image: redis
+    container_name: main-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - /C/Users/ashit/OneDrive/temp/docker-volumes/redis/main:/data/db
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  kafka-kraft:
+    image: confluentinc/cp-kafka
+    container_name: kafka
+    ports:
+      - "9092:9092"
+      - "29092:29092"
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT
+      KAFKA_LISTENERS: INTERNAL://0.0.0.0:29092,EXTERNAL://0.0.0.0:9092,CONTROLLER://0.0.0.0:29093
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-kraft:29092,EXTERNAL://localhost:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka-kraft:29093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_LOG_DIRS: /tmp/kraft-combined-logs
+      CLUSTER_ID: 4L6g3nShT-eMCtK--X86sw
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "bash",
+          "-c",
+          "kafka-topics --bootstrap-server localhost:9092 --list || exit 1",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 20s
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  notify-api:
+    build: ./services/notification/notify-api
+    ports:
+      - "7000:7000"
+    environment:
+      KAFKA_BROKER: kafka-kraft:29092
+      NOTIFY_PASS_KEY: uie37r8478btrmsmfeuvgt73471i118n1sf31ub7989437238cbfejcbt3
+    restart: unless-stopped
+    depends_on:
+      kafka-kraft:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  notify-consumer:
+    build: ./services/notification/notify-consumer
+    ports:
+      - "7001:7001"
+    environment:
+      KAFKA_BROKER: kafka-kraft:29092
+      REDIS_HOST: main-redis
+      REDIS_PORT: 6379
+    restart: unless-stopped
+    depends_on:
+      - kafka-kraft
+      - main-redis
+    networks:
+      - app-network
+
+  notify-send:
+    build: ./services/notification/notify-send
+    ports:
+      - "7002:7002"
+    environment:
+      REDIS_HOST: main-redis
+      REDIS_PORT: 6379
+      EMAIL_USER: majdeltacrypto@gmail.com
+      EMAIL_PASS: sswkegildewfferk
+    restart: unless-stopped
+    depends_on:
+      - main-redis
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

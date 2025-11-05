@@ -1,0 +1,17 @@
+{
+  "name": "multi-vendor",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix services\" \"npm run dev --prefix client\" "
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "concurrently": "^9.2.1",
+    "nodemon": "^3.1.10",
+    "zod": "^4.1.12"
+  }
+}
