@@ -6,7 +6,7 @@ const { Kafka } = pkg;
 export class KafkaConfig {
   constructor(brokers = [], groupId = "default-group") {
     this.kafka = new Kafka({
-      clientId: "vendor-event-consumer-service",
+      clientId: "catalogue-event-consumer",
       brokers,
       logLevel: logLevel.NOTHING,
       logCreator: () => () => {},

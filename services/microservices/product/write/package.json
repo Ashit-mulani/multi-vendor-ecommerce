@@ -1,0 +1,26 @@
+{
+  "name": "write",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@sakura-soft/common-product-model": "^1.0.1",
+    "@sakura-soft/common-product-variant-model": "^1.0.1",
+    "@sakura-soft/common-store-model": "^1.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "ioredis": "^5.8.2",
+    "kafkajs": "^2.2.4",
+    "mongoose": "^8.19.3",
+    "pino": "^10.1.0",
+    "zod": "^3.23.8"
+  }
+}

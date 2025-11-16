@@ -4,4 +4,6 @@ dotenv.config();
 
 const catalogueUrl = process.env.CATALOGUE_URL;
 
-export { catalogueUrl };
+const productUrl = process.env.PRODUCT_URL;
+
+export { catalogueUrl, productUrl };

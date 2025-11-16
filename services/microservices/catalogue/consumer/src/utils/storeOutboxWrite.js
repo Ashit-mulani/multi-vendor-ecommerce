@@ -34,6 +34,7 @@ export const storeBackupDbWrite = async (
   );
 
   const backupEntries = failedDocs.map((doc) => ({
+    for: "catalogue",
     type,
     entity: "Store",
     actor: {

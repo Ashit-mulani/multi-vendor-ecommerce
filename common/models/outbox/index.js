@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 export const outboxSchema = new mongoose.Schema(
   {
+    for: {
+      type: String,
+      required: true,
+    },
     type: {
       type: String,
       enum: ["c", "u", "d"],

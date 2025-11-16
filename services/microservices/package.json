@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "",
-    "dev": "concurrently \"npm run dev --prefix catalogue\""
+    "dev": "concurrently \"npm run dev --prefix catalogue\" \"npm run dev --prefix product\""
   },
   "keywords": [],
   "author": "",

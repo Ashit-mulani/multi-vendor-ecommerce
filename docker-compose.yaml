@@ -49,6 +49,17 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
+  product-gateway:
+    build: ./services/api-gateways/product
+    container_name: product-gateway
+    ports:
+      - "82:80"
+    restart: unless-stopped
+    networks:
+      - app-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
   main-redis:
     image: redis
     container_name: main-redis

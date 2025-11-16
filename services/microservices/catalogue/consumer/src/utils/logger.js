@@ -3,7 +3,7 @@ import pino from "pino";
 const logger = pino({
   level: "trace",
   base: {
-    service: "vendor-event-consumer",
+    service: "catalogue-event-consumer",
   },
   timestamp: pino.stdTimeFunctions.isoTime,
 });

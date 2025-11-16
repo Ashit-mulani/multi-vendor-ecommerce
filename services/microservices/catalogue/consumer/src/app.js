@@ -5,7 +5,7 @@ const app = express();
 app.get("/", (req, res) => {
   res.status(200).json({
     status: "success",
-    message: "vendor-event-consumer is running 🚀",
+    message: "catalogue-event-consumer is running 🚀",
   });
 });
 
