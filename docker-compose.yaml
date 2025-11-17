@@ -38,28 +38,6 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
-  catalogue-gateway:
-    build: ./services/api-gateways/catalogue
-    container_name: catalogue-gateway
-    ports:
-      - "81:80"
-    restart: unless-stopped
-    networks:
-      - app-network
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-
-  product-gateway:
-    build: ./services/api-gateways/product
-    container_name: product-gateway
-    ports:
-      - "82:80"
-    restart: unless-stopped
-    networks:
-      - app-network
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-
   main-redis:
     image: redis
     container_name: main-redis
@@ -104,6 +82,18 @@ services:
       retries: 10
       start_period: 20s
     restart: unless-stopped
+    networks:
+      - app-network
+
+  consul:
+    image: hashicorp/consul:latest
+    container_name: consul
+    command: agent -dev -client=0.0.0.0
+    ports:
+      - "8500:8500"
+      - "8600:8600/udp"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     networks:
       - app-network
 

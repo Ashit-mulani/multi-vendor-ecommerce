@@ -1,22 +1,24 @@
-import { catalogueUrl } from "../config/urls/micro-url.js";
 import { asyncFunc } from "../utils/asyncFunc.js";
 import { apiError } from "../utils/apiError.js";
 import { validateFields } from "../utils/validateFields.js";
 import { axiosHandler } from "../utils/axiosHandler.js";
+import { resolveService } from "../config/service-discovery.js";
 
 const createStore = asyncFunc(async (req, res) => {
   const vendorId = req.vendor._id;
 
+  const baseUrl = await resolveService("catalogue-write-service");
+
   const result = await axiosHandler({
     method: "post",
-    url: `${catalogueUrl}/store`,
+    url: `${baseUrl}/catalogue/api/v1/store`,
     data: {
       ...req.body,
       vendorId,
     },
   });
 
-  return res.status(200).json(result);
+  return res.status(200).json(result, baseUrl);
 });
 
 const updateStore = asyncFunc(async (req, res) => {
@@ -26,9 +28,11 @@ const updateStore = asyncFunc(async (req, res) => {
 
   validateFields({ storeId });
 
+  const baseUrl = await resolveService("catalogue-write-service");
+
   const result = await axiosHandler({
     method: "put",
-    url: `${catalogueUrl}/store/${storeId}`,
+    url: `${baseUrl}/catalogue/api/v1/store/${storeId}`,
     data: {
       ...req.body,
       vendorId,
@@ -45,9 +49,11 @@ const deleteStore = asyncFunc(async (req, res) => {
 
   validateFields({ storeId });
 
+  const baseUrl = await resolveService("catalogue-write-service");
+
   const result = await axiosHandler({
     method: "delete",
-    url: `${catalogueUrl}/store/${storeId}`,
+    url: `${baseUrl}/catalogue/api/v1/store/${storeId}`,
     data: {
       vendorId,
     },
@@ -59,9 +65,11 @@ const deleteStore = asyncFunc(async (req, res) => {
 const getStore = asyncFunc(async (req, res) => {
   const vendorId = req.vendor._id;
 
+  const baseUrl = await resolveService("catalogue-read-service");
+
   const result = await axiosHandler({
     method: "get",
-    url: `${catalogueUrl}/store`,
+    url: `${baseUrl}/catalogue/api/v1/store`,
     data: { vendorId },
   });
 
@@ -73,9 +81,13 @@ const canStoreNameExist = asyncFunc(async (req, res) => {
 
   validateFields({ name });
 
+  const baseUrl = await resolveService("catalogue-read-service");
+
   const result = await axiosHandler({
     method: "get",
-    url: `${catalogueUrl}/store/name/exist?name=${encodeURIComponent(name)}`,
+    url: `${baseUrl}/catalogue/api/v1/store/name/exist?name=${encodeURIComponent(
+      name
+    )}`,
   });
 
   return res.status(200).json(result);

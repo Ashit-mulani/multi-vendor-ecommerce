@@ -5,7 +5,7 @@ import storeRouter from "./routes/store-route.js";
 
 const app = express();
 
-app.get("/", (_, res) => {
+app.get("/health", (_, res) => {
   return res.status(200).json({ message: "_ok catalogue write 6001" });
 });
 

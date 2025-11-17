@@ -5,7 +5,7 @@ import {
   productVariantSchema,
 } from "../schema/product-schema.js";
 
-const createProduct = asyncFunc(async (res, res) => {
+const createProduct = asyncFunc(async (req, res) => {
   const store = req.store;
   const vendorId = req.body;
 
